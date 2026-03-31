@@ -74,13 +74,14 @@ LIMIT  10;
 
 ```bash
 # Subir v2 SIN el script de migración (simulamos actualización descuidada)
-scp -r modulo_catalogo_v2 user@IP:/tmp/modulo_catalogo_nuevo
+scp -r modulo_catalogo_v2 user@192.168.1.168:/tmp/modulo_catalogo_nuevo
 ssh -t user@192.168.1.168 "
   sudo rm -rf /opt/odoo/odoo/custom_addons/modulo_catalogo && \
   sudo mv /tmp/modulo_catalogo_nuevo /opt/odoo/odoo/custom_addons/modulo_catalogo && \
   sudo rm -rf /opt/odoo/odoo/custom_addons/modulo_catalogo/migrations && \
   sudo chown -R odoo:odoo /opt/odoo/odoo/custom_addons/modulo_catalogo
 "
+
 ```
 
 Desde la interfaz:
@@ -103,7 +104,7 @@ La interfaz muestra un error rojo genérico. El módulo queda inconsistente:
 
 ```bash
 # Subir v2 completa, incluyendo migrations/
-scp -r modulo_catalogo_v2 user@IP:/tmp/modulo_catalogo_nuevo
+scp -r modulo_catalogo_v2 user@192.168.1.168:/tmp/modulo_catalogo_nuevo
 ssh -t user@192.168.1.168 "
   sudo rm -rf /opt/odoo/odoo/custom_addons/modulo_catalogo && \
   sudo mv /tmp/modulo_catalogo_nuevo /opt/odoo/odoo/custom_addons/modulo_catalogo && \
