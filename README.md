@@ -182,7 +182,7 @@ dropdb --if-exists odoo19 && createdb -O odoo odoo19
   --stop-after-init
 
 # 3. Cargar idioma español
-./odoo i18n loadlang -c /etc/odoo/odoo.conf -d odoo19 -l es_ES
+./odoo i18n loadlang -c /etc/odoo/odoo.conf -d odoo19 -l es
 
 # 4. Cargar datos demo
 ./odoo module force-demo -c /etc/odoo/odoo.conf -d odoo19
