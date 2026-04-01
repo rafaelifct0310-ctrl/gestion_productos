@@ -142,3 +142,47 @@ WHERE  clasificacion_abc IS NULL OR margen_minimo <= 0;
 | CHECK constraint con NULL       | ❌ CheckViolation  | ✅ Datos migrados antes |
 | CHECK constraint con 0.0        | ❌ CheckViolation  | ✅ Datos migrados antes |
 | Estado BD si falla              | ⚠️ Inconsistente  | ✅ Rollback limpio      |
+---
+
+# Método para borrar BBDD y crear una nueva en Odoo desde la línea de comando
+## Detén Odoo primero si está corriendo
+```bash
+sudo systemctl stop odoo
+```
+## Borrar y crear la nueva base de datos demo
+#### "ejecutar odoo bin" (asegurarnos que estamos en el directorio correcto)
+```bash
+
+# Drop if exists, then recreate
+dropdb --if-exists odoo19 && createdb odoo19
+
+# Install base module
+./odoo -c /etc/odoo/odoo.conf \
+  --addons-path=/opt/odoo/odoo/odoo/addons,/opt/odoo/odoo/addons,/opt/odoo/odoo/custom_addons \
+  -d odoo19 \
+  -i base \
+  --stop-after-init
+
+# Load demo data
+./odoo module force-demo -c /etc/odoo/odoo.conf -d odoo19
+
+
+```
+
+## Si queremos forzar el idioma
+```bash
+# Borrar y recrear la base de datos
+dropdb --if-exists odoo19 && createdb -O odoo odoo19
+
+# Instalar base con idioma español
+./odoo -c /etc/odoo/odoo.conf \
+  --addons-path=/opt/odoo/odoo/odoo/addons,/opt/odoo/odoo/addons,/opt/odoo/odoo/custom_addons \
+  -d odoo19 \
+  -i base \
+  --load-language=es_ES \
+  --language=es_ES \
+  --stop-after-init
+
+# Cargar datos demo
+./odoo module force-demo -c /etc/odoo/odoo.conf -d odoo19
+```
